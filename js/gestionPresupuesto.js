@@ -60,11 +60,13 @@ function borrarGasto(idN){
 }
 
 function calcularTotalGastos(){
-
+    let suma= gastos.reduce((total, gasto) => total + gasto.valor, 0)
+    return suma;
 }
 
 function calcularBalance(){
-
+    let balance= presupuesto - calcularTotalGastos();
+    return balance;
 }
 
 
