@@ -23,16 +23,20 @@ function mostrarPresupuesto() {
 
 function CrearGasto(descripcion, valor) {
     this.descripcion=descripcion;
-    this.valor=valor;
-    
+    if(isNaN(valor)||valor<0){
+        this.valor=0;
+    }else {
+        this.valor=valor;
+    }
+
     this.mostrarGasto = function(){
-        return `Gasto correspondiente a ${this.descripcion} con valor ${this.valor}`;
+        return `Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €`;
     }
     this.actualizarDescripcion = function (nuevaDescripcion){
         this.descripcion=nuevaDescripcion;
     }
     this.actualizarValor = function (nuevoValor){
-        if(!isNaN(nuevoValor) || nuevoValor >= 0){
+        if(!isNaN(nuevoValor) & nuevoValor >= 0){
             this.valor=nuevoValor;
         }  
     }
