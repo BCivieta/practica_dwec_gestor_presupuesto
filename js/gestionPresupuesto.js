@@ -3,6 +3,8 @@
 // TODO: Crear las funciones, objetos y variables indicadas en el enunciado
 
 let presupuesto = 0;
+gastos=[];
+idGastos=0;
 
 
 function actualizarPresupuesto(nuevoPresupuesto) {
