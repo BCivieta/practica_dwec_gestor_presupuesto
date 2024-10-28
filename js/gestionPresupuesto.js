@@ -1,4 +1,4 @@
-
+"use strict"
 
 // TODO: Crear las funciones, objetos y variables indicadas en el enunciado
 
@@ -7,19 +7,18 @@ let presupuesto = 0;
 
 function actualizarPresupuesto(nuevoPresupuesto) {
     
-    if(nuevoPresupuesto >=0) {
+    if(isNaN (nuevoPresupuesto) || nuevoPresupuesto <0) {
+        return -1;
+    }else {
         presupuesto=nuevoPresupuesto;
         return presupuesto;
-    }else {
-        console.log ("Error, valor no válido")
-        return -1;
     }
     
 }
 
 function mostrarPresupuesto() {
     
-   return console.log("tu presupuesto actual es de:" + presupuesto)
+   return `Tu presupuesto actual es de ${presupuesto} €`;
 }
 
 function CrearGasto() {
