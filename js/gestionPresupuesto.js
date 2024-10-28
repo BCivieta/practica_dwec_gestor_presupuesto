@@ -3,8 +3,8 @@
 // TODO: Crear las funciones, objetos y variables indicadas en el enunciado
 
 let presupuesto = 0;
-gastos=[];
-idGastos=0;
+let gastos=[];
+let idGastos=0;
 
 
 function actualizarPresupuesto(nuevoPresupuesto) {
@@ -23,13 +23,11 @@ function mostrarPresupuesto() {
    return `Tu presupuesto actual es de ${presupuesto} €`;
 }
 
-function CrearGasto(descripcion, valor) {
-    this.descripcion=descripcion;
-    if(isNaN(valor)||valor<0){
-        this.valor=0;
-    }else {
-        this.valor=valor;
-    }
+function CrearGasto(descripcion, valor, fecha,...etiquetas) {
+    this.descripcion = descripcion;
+    this.valor = (isNaN(valor)||valor<0) ? 0 : valor;
+    this.fecha = (!fecha || isNaN(Date.parse(fecha))) ? Date.now() : Date.parse(fecha);
+    this.estiquetas= (!etiquetas)? [] : etiquetas;
 
     this.mostrarGasto = function(){
         return `Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €`;
@@ -45,15 +43,20 @@ function CrearGasto(descripcion, valor) {
 }
 
 function listarGastos(){
-    
+    return gastos;
 }
 
-function anyadirGastos(){
-
+function anyadirGasto(gastoN){
+    gasto.id=idGastos;
+    idGastos++;
+    gastos.push(gastoN)
 }
 
-function borrarGastos(){
-
+function borrarGasto(idN){
+    let idIndicado = gastos.findIndex (gasto => gasto.id===idN);
+    if(idIndicado !== -1){
+        gastos.splice(idIndicado,1);
+    }
 }
 
 function calcularTotalGastos(){
@@ -73,8 +76,8 @@ export   {
     actualizarPresupuesto,
     CrearGasto,
     listarGastos,
-    anyadirGastos,
-    borrarGastos,
+    anyadirGasto,
+    borrarGasto,
     calcularTotalGastos,
     calcularBalance
 }
