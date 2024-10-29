@@ -34,7 +34,7 @@ function CrearGasto(descripcion, valor, fecha,...etiquetas) {
     }
    this.mostrarGastoCompleto = function(){
         
-        let texto= this.mostrarGasto ()+`\nFecha: ${new Date (this.fecha).toLocaleString()}\nEtiquetas:\n`;
+        let texto= this.mostrarGasto ()+`.\nFecha: ${new Date (this.fecha).toLocaleString()}\nEtiquetas:\n`;
         this.etiquetas.forEach(etiqueta => {
             texto+=`- ${etiqueta}\n`;
         });
