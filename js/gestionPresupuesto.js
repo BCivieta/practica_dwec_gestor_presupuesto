@@ -48,16 +48,19 @@ function CrearGasto(descripcion, valor, fecha,...etiquetas) {
             this.valor=nuevoValor;
         }  
     }
+    this.actualizarFecha = function (fecha){
+        this.fecha= Date.parse(fecha) || this.fecha;
+    }
 }
 
 function listarGastos(){
     return gastos;
 }
 
-function anyadirGasto(gastoN){
+function anyadirGasto(gasto){
     gasto.id=idGastos;
     idGastos++;
-    gastos.push(gastoN)
+    gastos.push(gasto)
 }
 
 function borrarGasto(idN){
