@@ -51,20 +51,28 @@ function CrearGasto(descripcion, valor, fecha,...etiquetas) {
     this.actualizarFecha = function (fecha){
         this.fecha= Date.parse(fecha) || this.fecha;
     }
+    this.anyadirEtiquetas = function (...etiquetasNuevas){
+        etiquetasNuevas.forEach(etiquetaNueva => {
+            if( ! this.etiquetas.includes(etiquetaNueva))
+            {
+                this.etiquetas.push(etiquetaNueva)
+            }       
+        }) 
+    }
 }
 
 function listarGastos(){
     return gastos;
 }
 
-function anyadirGasto(gasto){
-    gasto.id=idGastos;
+function anyadirGasto(gastoNuevo){
+    gastoNuevo.id=idGastos;
     idGastos++;
-    gastos.push(gasto)
+    gastos.push(gastoNuevo)
 }
 
-function borrarGasto(idN){
-    let idIndicado = gastos.findIndex (gasto => gasto.id===idN);
+function borrarGasto(idBuscado){
+    let idIndicado = gastos.findIndex (gasto => gasto.id===idBuscado);
     if(idIndicado !== -1){
         gastos.splice(idIndicado,1);
     }
