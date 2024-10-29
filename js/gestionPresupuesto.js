@@ -30,7 +30,7 @@ function CrearGasto(descripcion, valor, fecha,...etiquetas) {
     this.etiquetas= (!etiquetas)? [] : etiquetas;
 
     this.mostrarGasto = function(){
-        return `Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €.`;
+        return `Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €`;
     }
    this.mostrarGastoCompleto = function(){
         
