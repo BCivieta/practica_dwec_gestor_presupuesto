@@ -53,11 +53,14 @@ function CrearGasto(descripcion, valor, fecha,...etiquetas) {
     }
     this.anyadirEtiquetas = function (...etiquetasNuevas){
         etiquetasNuevas.forEach(etiquetaNueva => {
-            if( ! this.etiquetas.includes(etiquetaNueva))
-            {
+            if( ! this.etiquetas.includes(etiquetaNueva)){
                 this.etiquetas.push(etiquetaNueva)
             }       
         }) 
+    }
+    this.borrarEtiquetas = function (...etiquetasBorrar){
+        this.etiquetas=this.etiquetas.filter(etiqueta =>
+            !etiquetasBorrar.includes(etiqueta))
     }
 }
 
