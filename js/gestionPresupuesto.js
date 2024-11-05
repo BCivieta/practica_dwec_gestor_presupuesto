@@ -32,6 +32,7 @@ function CrearGasto(descripcion, valor, fecha,...etiquetas) {
     this.mostrarGasto = function(){
         return `Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €`;
     }
+
    this.mostrarGastoCompleto = function(){
         
         let texto= this.mostrarGasto ()+`.\nFecha: ${new Date (this.fecha).toLocaleString()}\nEtiquetas:\n`;
@@ -40,17 +41,21 @@ function CrearGasto(descripcion, valor, fecha,...etiquetas) {
         });
         return texto;
    }
+
     this.actualizarDescripcion = function (nuevaDescripcion){
         this.descripcion=nuevaDescripcion;
     }
+
     this.actualizarValor = function (nuevoValor){
         if(!isNaN(nuevoValor) & nuevoValor >= 0){
             this.valor=nuevoValor;
         }  
     }
+
     this.actualizarFecha = function (fecha){
         this.fecha= Date.parse(fecha) || this.fecha;
     }
+
     this.anyadirEtiquetas = function (...etiquetasNuevas){
         etiquetasNuevas.forEach(etiquetaNueva => {
             if( ! this.etiquetas.includes(etiquetaNueva)){
@@ -58,10 +63,12 @@ function CrearGasto(descripcion, valor, fecha,...etiquetas) {
             }       
         }) 
     }
+
     this.borrarEtiquetas = function (...etiquetasBorrar){
         this.etiquetas=this.etiquetas.filter(etiqueta =>
             !etiquetasBorrar.includes(etiqueta))
     }
+
     this.obtenerPeriodoAgrupacion = function (periodo){
         let fecha = new Date (this.fecha).toISOString()
 
@@ -74,9 +81,9 @@ function CrearGasto(descripcion, valor, fecha,...etiquetas) {
             return fecha.substring(0,7);
         }
         if(periodo==`anyo`)
-            {
-                return fecha.substring(0,4);
-            }
+        {
+            return fecha.substring(0,4);
+        }
     }
 }
 
@@ -106,9 +113,50 @@ function calcularBalance(){
     let balance= presupuesto - calcularTotalGastos();
     return balance;
 }
-function filtrarGastos(){
 
+function filtrarGastos(filtro){
+    let resultado= gastos;
+    if(Object.keys(filtro).length>0)
+    {
+        let resultado = gastos.filter(function(gasto){
+
+            let dentro = false;
+            if(filtro.fechaDesde!=undefined) 
+            {
+                if(gasto.fecha <= Date.parse(filtro.fechaDesde)) {dentro= true;
+                }else dentro=false;
+            }
+            if(filtro.fechaHasta != undefined)
+            {
+                if(gasto.fecha < Date.parse(filtro.fechaHasta)) dentro = true;
+            }
+            if (filtro.valorMinimo!= undefined)
+            {
+                if(gasto.valor >= filtro.valorMinimo) dentro = true;
+            }
+            if(filtro.valorMaximo != undefined )
+            {
+                if( gasto.valor >= filtro.valorMaximo) dentro= true;
+            }
+            if(filtro.descripcionContiene != undefined)
+            {
+                if (filtro.descripcionContiene.toLowerCase().includes(gasto.descripcion.toLowerCase())) dentro = true;
+            }
+            if(filtro.etiquetasTiene != undefined)
+            {
+                let etiquetasGasto= gasto.etiquetas.map(elemento=> elemento.toLowerCase());
+                let etiquetasFiltro= filtro.etiquetasTiene.map(elemento=> elemento.toLowerCase());
+                if(etiquetasGasto.some(elemento=>etiquetasFiltro.includes(elemento)))
+                {
+                    dentro = true;
+                }
+            }
+            return dentro;
+        });
+    } 
+    return resultado;
 }
+
 function agruparGastos(){
 
 }
