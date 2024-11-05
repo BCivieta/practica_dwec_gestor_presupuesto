@@ -62,6 +62,22 @@ function CrearGasto(descripcion, valor, fecha,...etiquetas) {
         this.etiquetas=this.etiquetas.filter(etiqueta =>
             !etiquetasBorrar.includes(etiqueta))
     }
+    this.obtenerPeriodoAgrupacion = function (periodo){
+        let fecha = new Date (this.fecha).toISOString()
+
+        if(periodo==`dia`)
+        {
+            return fecha.substring(0,10);
+        }
+        if(periodo==`mes`)
+        {
+            return fecha.substring(0,7);
+        }
+        if(periodo==`anyo`)
+            {
+                return fecha.substring(0,4);
+            }
+    }
 }
 
 function listarGastos(){
