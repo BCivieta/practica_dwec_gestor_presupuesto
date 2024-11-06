@@ -114,47 +114,82 @@ function calcularBalance(){
     return balance;
 }
 
-function filtrarGastos(filtro){
-    let resultado= gastos;
-    if(Object.keys(filtro).length>0)
-    {
-        let resultado = gastos.filter(function(gasto){
+/*function filtrarGastos(filtro){
+   
+    return gastos.filter(function(gasto){
 
-            let dentro = false;
-            if(filtro.fechaDesde!=undefined) 
-            {
-                if(gasto.fecha <= Date.parse(filtro.fechaDesde)) {dentro= true;
-                }else dentro=false;
+        let dentro = true;
+        if(filtro.fechaDesde!=undefined) 
+        {
+            if(gasto.fecha < Date.parse(filtro.fechaDesde)) dentro= false;
+            //}else dentro=false;
+        }
+        if(filtro.fechaHasta != undefined)
+        {
+            if(gasto.fecha > Date.parse(filtro.fechaHasta)) dentro = false;
+           // }else dentro=false;
+        }   
+        if (filtro.valorMinimo!= undefined)
+        {
+            if(gasto.valor < filtro.valorMinimo) dentro = false;
+        }
+        if(filtro.valorMaximo != undefined )
+        {
+            if( gasto.valor > filtro.valorMaximo) dentro= false;
+        }
+        if(filtro.descripcionContiene != undefined)
+        {
+            if (!gasto.descripcion.toLowerCase().includes(filtro.descripcionContiene.toLowerCase())) dentro = false;
+        }
+        if(filtro.etiquetasTiene != undefined)
+        {
+            let etiquetasGastoMinus= gasto.etiquetas.map(elemento=> elemento.toLowerCase());        //Itera sobre cada elemento y ejecuta la funcion (que convierte en minúsculas)
+            let etiquetasFiltroMinus= filtro.etiquetasTiene.map(elemento=> elemento.toLowerCase()); //sobre cada uno. Devulve el nuevo array.
+            if(!etiquetasGastoMinus.some(elemento=>etiquetasFiltroMinus.includes(elemento))) //Itera sobre cada elemento para ver si alguno cumple con una condicion dada. 
+            {                                                                                //devuelve true o false. Se detiene con el primero que cumpla
+                    dentro = false;
             }
-            if(filtro.fechaHasta != undefined)
-            {
-                if(gasto.fecha < Date.parse(filtro.fechaHasta)) dentro = true;
+        }
+        return dentro;//devolvemos si el gasto esta dentro del nuevo array o no.
+    });
+}*/
+function filtrarGastos(filtro){
+   
+    return gastos.filter(function(gasto){
+
+        if(!filtro) return true//si no exixte parametro filtro, el gasto entra en el array filtrado.
+        let dentro = true; // establecemos la entrada en el nuevo array como true, y pasaremos a false si no cumple con algun parametro de filtrado que exista.
+        if(filtro.fechaDesde!=undefined && gasto.fecha < Date.parse(filtro.fechaDesde))//comenzamos a comprobar si el gasto pasa los filtros
+        {                                                                              //si existe este filtro y lo pasa, no entra en el if y pasa a la siguiente condicion de filtrado
+            dentro = false;                                                            //si no pasa el filtro entra en el if y decuelve false y ya 
+        }                                                                              //no entrará en a siguiente condición. finalmente dentro valdra false y no entrara en el nuevo array.
+        else if (filtro.fechaHasta != undefined && gasto.fecha > Date.parse(filtro.fechaHasta))
+        {
+            dentro = false;
+        } 
+        else if (filtro.valorMinimo!= undefined && gasto.valor < filtro.valorMinimo)
+        {
+            dentro = false;
+        }
+        else if(filtro.valorMaximo != undefined && gasto.valor > filtro.valorMaximo)
+        {
+            dentro= false;
+        } 
+        else if(filtro.descripcionContiene != undefined && !gasto.descripcion.toLowerCase().includes(filtro.descripcionContiene.toLowerCase())) 
+        {
+            dentro = false;
+        }
+        if(filtro.etiquetasTiene != undefined)
+        {
+            let etiquetasGastoMinus= gasto.etiquetas.map(elemento=> elemento.toLowerCase());        //Itera sobre cada elemento y ejecuta la funcion (que convierte en minúsculas)
+            let etiquetasFiltroMinus= filtro.etiquetasTiene.map(elemento=> elemento.toLowerCase()); //sobre cada uno. Devulve el nuevo array.
+            if(!etiquetasGastoMinus.some(elemento=>etiquetasFiltroMinus.includes(elemento))) //Itera sobre cada elemento para ver si alguno cumple con una condicion dada. 
+            {                                                                                //devuelve true o false. Se detiene con el primero que cumpla
+                    dentro = false;
             }
-            if (filtro.valorMinimo!= undefined)
-            {
-                if(gasto.valor >= filtro.valorMinimo) dentro = true;
-            }
-            if(filtro.valorMaximo != undefined )
-            {
-                if( gasto.valor >= filtro.valorMaximo) dentro= true;
-            }
-            if(filtro.descripcionContiene != undefined)
-            {
-                if (filtro.descripcionContiene.toLowerCase().includes(gasto.descripcion.toLowerCase())) dentro = true;
-            }
-            if(filtro.etiquetasTiene != undefined)
-            {
-                let etiquetasGasto= gasto.etiquetas.map(elemento=> elemento.toLowerCase());
-                let etiquetasFiltro= filtro.etiquetasTiene.map(elemento=> elemento.toLowerCase());
-                if(etiquetasGasto.some(elemento=>etiquetasFiltro.includes(elemento)))
-                {
-                    dentro = true;
-                }
-            }
-            return dentro;
-        });
-    } 
-    return resultado;
+        }
+        return dentro;//si el gasto no ha entrado en ninguna condicion porque pasaba todos los filtros, dentro no se modifica y se devuelve true. El gasto fomará parte del nuevo array.
+    });
 }
 
 function agruparGastos(){
