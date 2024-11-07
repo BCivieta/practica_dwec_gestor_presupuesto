@@ -113,7 +113,7 @@ function calcularBalance(){
     let balance= presupuesto - calcularTotalGastos();
     return balance;
 }
-
+//CODIGO QUE PASA EL TEST PERO QUE NO ASEGURA QUE SOLO LOS GASTOS QUE PASEN TODOS LOS FILTROS ESTEN DENTRO DEL NUEVO ARRAY
 /*function filtrarGastos(filtro){
    
     return gastos.filter(function(gasto){
@@ -161,7 +161,7 @@ function filtrarGastos(filtro){
         let dentro = true; // establecemos la entrada en el nuevo array como true, y pasaremos a false si no cumple con algun parametro de filtrado que exista.
         if(filtro.fechaDesde!=undefined && gasto.fecha < Date.parse(filtro.fechaDesde))//comenzamos a comprobar si el gasto pasa los filtros
         {                                                                              //si existe este filtro y lo pasa, no entra en el if y pasa a la siguiente condicion de filtrado
-            dentro = false;                                                            //si no pasa el filtro entra en el if y decuelve false y ya 
+            dentro = false;                                                            //si no pasa el filtro entra en el if, decuelve false y ya 
         }                                                                              //no entrará en a siguiente condición. finalmente dentro valdra false y no entrara en el nuevo array.
         else if (filtro.fechaHasta != undefined && gasto.fecha > Date.parse(filtro.fechaHasta))
         {
@@ -179,7 +179,7 @@ function filtrarGastos(filtro){
         {
             dentro = false;
         }
-        if(filtro.etiquetasTiene != undefined)
+        else if(filtro.etiquetasTiene != undefined)
         {
             let etiquetasGastoMinus= gasto.etiquetas.map(elemento=> elemento.toLowerCase());        //Itera sobre cada elemento y ejecuta la funcion (que convierte en minúsculas)
             let etiquetasFiltroMinus= filtro.etiquetasTiene.map(elemento=> elemento.toLowerCase()); //sobre cada uno. Devulve el nuevo array.
@@ -192,8 +192,25 @@ function filtrarGastos(filtro){
     });
 }
 
-function agruparGastos(){
+function agruparGastos(periodo, fechaDesde, fechaHasta, etiquetas){
+    
+    let agruparGastosEn={ 
+        fechaDesde : fechaDesde,
+        fechaHasta: fechaHasta,
+        etiquetasTiene: etiquetas
+    };
+    let gastosFiltrados = filtrarGastos(agruparGastosEn);
+    
+    let gastosPorPeriodo = gastosFiltrados.reduce(function(acumulador, gasto){
 
+        let periodoElegido = gasto.obtenerPeriodoAgrupacion(periodo);
+
+        acumulador[periodoElegido] = acumulador[periodoElegido] || 0;
+        acumulador[periodoElegido] += gasto.valor;
+
+        return acumulador;
+    },{})
+    return gastosPorPeriodo;
 }
 
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
