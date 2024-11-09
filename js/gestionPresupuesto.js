@@ -192,7 +192,7 @@ function filtrarGastos(filtro){
     });
 }
 
-function agruparGastos(periodo, fechaDesde, fechaHasta, etiquetas){
+function agruparGastos(periodo,  etiquetas, fechaDesde, fechaHasta){
     
     let agruparGastosEn={ 
         fechaDesde : fechaDesde,
