@@ -1,4 +1,5 @@
-function mostrarDatoEnId(valor, idElemento){
+import * as gesPres from "./gestionPresupuesto.js";
+function mostrarDatoEnId(idElemento, valor){
 
     let idElemento = document.getElementById(id);
     idElemento.textContent = valor;
