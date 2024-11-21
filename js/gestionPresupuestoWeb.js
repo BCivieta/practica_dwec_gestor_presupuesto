@@ -1,14 +1,18 @@
 import * as gesPres from "./gestionPresupuesto.js";
 function mostrarDatoEnId(idElemento, valor){
 
-    let idElemento = document.getElementById(id);
-    idElemento.textContent = valor;
+    let elemento = document.getElementById(idElemento);
+    elemento.textContent = valor;
 }
 function mostrarGastoWeb(idElemento, gasto){
 
     let divIdElemento = document.getElementById(idElemento);
     let divGasto = document.createElement("div");
     divGasto.classList.add("gasto");
+    if (divIdElemento){
+        divIdElemento.appendChild(divGasto);
+    }
+    
 
     let divDescripcion = document.createElement("div");
     divDescripcion.classList.add ("gasto-descripcion");
@@ -28,7 +32,7 @@ function mostrarGastoWeb(idElemento, gasto){
     let divEtiquetas = document.createElement("div");
     divEtiquetas.classList.add("gasto-etiquetas");
     
-    for(let etiqueta of gasto) {
+    for(let etiqueta of gasto.etiquetas) {
         let spanEtiqueta = document.createElement("span");
         spanEtiqueta.classList.add("gasto-etiquetas-etiqueta")
         spanEtiqueta.textContent = etiqueta + ",";
@@ -36,7 +40,7 @@ function mostrarGastoWeb(idElemento, gasto){
         divEtiquetas.appendChild(spanEtiqueta);
     }
     divGasto.appendChild(divEtiquetas);
-    divIdElemento.appendChild(divGasto);
+    //divIdElemento.appendChild(divGasto);
 }
 function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo){
     let divIdElemento = document.getElementById(idElemento);
@@ -63,7 +67,6 @@ function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo){
     }
     divIdElemento.appendChild(divAgrup);
 }
-
 export{
     mostrarDatoEnId,
     mostrarGastoWeb,
