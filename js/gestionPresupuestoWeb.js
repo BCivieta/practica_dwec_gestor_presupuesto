@@ -40,16 +40,18 @@ function mostrarGastoWeb(idElemento, gasto){
         divEtiquetas.appendChild(spanEtiqueta);
     }
     divGasto.appendChild(divEtiquetas);
-    //divIdElemento.appendChild(divGasto);
+   
 }
 function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo){
     let divIdElemento = document.getElementById(idElemento);
     let divAgrup = document.createElement("div");
     divAgrup.classList.add("agrupacion");
+    divIdElemento.appendChild(divAgrup);
 
-    let h1=document.createElement("h1");
-    h1.textContent = "Gastos agrupados por "+ periodo;
-    divAgrup.appendChild(h1);
+
+    let titulo=document.createElement("h1");
+    titulo.textContent = `Gastos agrupados por ${periodo}`;
+    divAgrup.appendChild(titulo);
 
     for(let [clave, valor] of Object.entries(agrup)){
         let divAgrupDato = document.createElement("div");
@@ -57,15 +59,16 @@ function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo){
 
         let spanDatoClave = document.createElement("span");
         spanDatoClave.classList.add("agrupacion-dato-clave");
+        spanDatoClave.textContent= clave;
         divAgrupDato.appendChild(spanDatoClave);
 
         let spanDatoValor = document.createElement("span");
         spanDatoValor.classList.add("agrupacion-dato-valor");
-        divAgrup.appendChild(spanDatoValor);
+        spanDatoValor.textContent=valor;
+        divAgrupDato.appendChild(spanDatoValor);
 
         divAgrup.appendChild(divAgrupDato);
     }
-    divIdElemento.appendChild(divAgrup);
 }
 export{
     mostrarDatoEnId,

@@ -29,18 +29,18 @@ for(let gasto of gesPres.listarGastos()){
 for(let gasto of gesPres.filtrarGastos({ fechaDesde: "2021-09-01", fechaHasta: "2021-09-30" })){
     gesPresWeb.mostrarGastoWeb("listado-gastos-filtrado-1", gasto);
 }
-for(let gasto of gesPres.filtrarGastos({ ValorMinimo: 50 })){
+for(let gasto of gesPres.filtrarGastos({ valorMinimo: 50 })){
     gesPresWeb.mostrarGastoWeb("listado-gastos-filtrado-2", gasto);
 }
-for(let gasto of gesPres.filtrarGastos({ValorMinimo: 200, etiquetasTiene: ["seguros"]})){
+for(let gasto of gesPres.filtrarGastos({valorMinimo: 200, etiquetas: ["seguros"]})){
     gesPresWeb.mostrarGastoWeb("listado-gastos-filtrado-3", gasto);
 }
-for(let gasto of gesPres.filtrarGastos({ ValorMaximo:49, etiquetas:["comida", "transporte"]})){
+for(let gasto of gesPres.filtrarGastos({ valorMaximo:49, etiquetas:["comida", "transporte"]})){
     gesPresWeb.mostrarGastoWeb("listado-gastos-filtrado-4", gasto);
 }
 
-gesPresWeb.mostrarGastosAgrupadosWeb("agrupacion-dia", gesPres.agruparGastos("dia"), "dia");
+gesPresWeb.mostrarGastosAgrupadosWeb("agrupacion-dia",gesPres.agruparGastos("dia"), "día");
 gesPresWeb.mostrarGastosAgrupadosWeb("agrupacion-mes", gesPres.agruparGastos("mes"), "mes");
-gesPresWeb.mostrarGastosAgrupadosWeb("agrupacion-anyo", gesPres.agruparGastos("anyo"), "anyo");
+gesPresWeb.mostrarGastosAgrupadosWeb("agrupacion-anyo", gesPres.agruparGastos("anyo"), "año");
 
     
