@@ -108,6 +108,15 @@ function nuevoGastoWeb(){
 
 let botonAnyadirGasto = document.getElementById("anyadirgasto");
 botonAnyadirGasto.addEventListener("click", nuevoGastoWeb);
+
+function borrarEtiquetasHandle(gasto, etiqueta){
+    this.handleEven = function(){
+        this.gasto= gasto;
+        this.etiqueta= etiqueta;
+        gasto.borrarEtiquetas(etiqueta);
+        repintar();
+    }
+}
 export{
     mostrarDatoEnId,
     mostrarGastoWeb,
