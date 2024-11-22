@@ -70,6 +70,17 @@ function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo){
         divAgrup.appendChild(divAgrupDato);
     }
 }
+function repintar(){
+    mostrarDatoEnId("presupuesto", gesPres.mostrarPresupuesto());
+    mostrarDatoEnId("gastos-totales", gesPres.calcularTotalGastos());
+    mostrarDatoEnId("balance-total", gesPres.calcularBalance());
+
+    let elemento=getElementById("listado-gastos-completo");
+    elemento.innerHTML="";
+    for(let gasto of gesPres.listarGastos()){
+        mostrarGastoWeb("listado-gastos-completo",gasto);
+    }
+}
 export{
     mostrarDatoEnId,
     mostrarGastoWeb,
