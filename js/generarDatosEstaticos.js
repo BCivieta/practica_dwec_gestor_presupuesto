@@ -22,9 +22,9 @@ gesPres.anyadirGasto(gasto6);
 gesPresWeb.mostrarDatoEnId("gastos-totales", gesPres.calcularTotalGastos());
 gesPresWeb.mostrarDatoEnId("balance-total", gesPres.calcularBalance());
 
-let listadoGastos=gesPres.listarGastos();
+//let listadoGastos=gesPres.listarGastos();
 for(let gasto of gesPres.listarGastos()){
-    gesPresWeb.mostrarGastoWeb("listado-gastos-completo", gasto);
+gesPresWeb.mostrarGastoWeb("listado-gastos-completo", gasto);
 }
 for(let gasto of gesPres.filtrarGastos({ fechaDesde: "2021-09-01", fechaHasta: "2021-09-30" })){
     gesPresWeb.mostrarGastoWeb("listado-gastos-filtrado-1", gasto);

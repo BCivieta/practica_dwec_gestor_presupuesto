@@ -75,12 +75,22 @@ function repintar(){
     mostrarDatoEnId("gastos-totales", gesPres.calcularTotalGastos());
     mostrarDatoEnId("balance-total", gesPres.calcularBalance());
 
-    let elemento=getElementById("listado-gastos-completo");
-    elemento.innerHTML="";
+    let elemento = document.getElementById("listado-gastos-completo");
+    elemento.innerHTML = "";
     for(let gasto of gesPres.listarGastos()){
         mostrarGastoWeb("listado-gastos-completo",gasto);
     }
 }
+function actualizarPresupuestoWeb(){
+    let nuevoPresupuestoString = prompt("Introduce un presupuesto");
+    let nuevoPresupuestoNumbre = parseFloat(nuevoPresupuestoString);
+    gesPres.actualizarPresupuesto(nuevoPresupuestoNumbre);
+    repintar();
+
+}
+
+let botonActualizarPresupuesto = document.getElementById("actualizarpresupuesto");
+botonActualizarPresupuesto.addEventListener("click", actualizarPresupuestoWeb)//Se pasa solo la eferencia referencia ala funcion(sin parametros)
 export{
     mostrarDatoEnId,
     mostrarGastoWeb,
