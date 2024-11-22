@@ -91,6 +91,23 @@ function actualizarPresupuestoWeb(){
 
 let botonActualizarPresupuesto = document.getElementById("actualizarpresupuesto");
 botonActualizarPresupuesto.addEventListener("click", actualizarPresupuestoWeb)//Se pasa solo la eferencia referencia ala funcion(sin parametros)
+
+function nuevoGastoWeb(){
+    let descripcion = prompt("Introduce la descripción del gasto");
+    let valorString = prompt ("Introduce un valor");
+    let valorNumber = parseFloat(valorString);
+    let fecha = prompt ("Introduce una fecha. Formato yyyy-mm-dd ");
+    let etiquetasString = prompt("Introduce las etiquetas separadas por comas");
+    let etiquetasArray = etiquetasString.split(",");
+
+    let gasto = new gesPres.CrearGasto(descripcion, valorNumber, fecha, ...etiquetasArray);
+    gesPres.anyadirGasto(gasto);
+
+    repintar();
+}
+
+let botonAnyadirGasto = document.getElementById("anyadirgasto");
+botonAnyadirGasto.addEventListener("click", nuevoGastoWeb);
 export{
     mostrarDatoEnId,
     mostrarGastoWeb,
