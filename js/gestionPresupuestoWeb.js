@@ -37,10 +37,32 @@ function mostrarGastoWeb(idElemento, gasto){
         spanEtiqueta.classList.add("gasto-etiquetas-etiqueta")
         spanEtiqueta.textContent = etiqueta + ",";
 
+        let etiquetaEvento= new BorrarEtiquetasHandle(gasto,etiqueta);
+        spanEtiqueta.addEventListener("click", etiquetaEvento);
+
         divEtiquetas.appendChild(spanEtiqueta);
     }
     divGasto.appendChild(divEtiquetas);
-   
+
+    let botonEditar = document.createElement("button");
+    botonEditar.classList.add("gasto-editar");
+    botonEditar.setAttribute("type","button");
+    botonEditar.textContent= "Editar";
+
+    let eventoEditar= new EditarHandle(gasto);
+
+    botonEditar.addEventListener("click", eventoEditar);
+    divGasto.appendChild(botonEditar);
+
+    let botonBorrar= document.createElement("button");
+    botonBorrar.classList.add("gasto-borrar");
+    botonBorrar.setAttribute("type","button");
+
+    let eventoBorrar= new BorrarHandle(gasto);
+    botonBorrar.addEventListener("click", eventoBorrar);
+    botonBorrar.textContent="Borrar";
+    divGasto.appendChild(botonBorrar);
+
 }
 function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo){
     let divIdElemento = document.getElementById(idElemento);
@@ -112,12 +134,12 @@ botonAnyadirGasto.addEventListener("click", nuevoGastoWeb);
 function EditarHandle(gasto){
     this.handleEvent = function (event){
         this.gasto=gasto;
-        descripcion = propmt("Introduce la nueva descripción");
-        valorString= prompt ("introduce un nuevo valor");
-        valor= parseFloat(valorString);
-        fecha = prompt("Introduce una nueva fecha. Formato yyyy-mm-dd ")
-        etiquetasString = prompt("Introduce las nuevas etiquetas separadas por comas");
-        etiquetas=etiquetasString.split(",");
+        let descripcion = prompt("Introduce la nueva descripción");
+        let valorString= prompt ("introduce un nuevo valor");
+        let valor= parseFloat(valorString);
+        let fecha = prompt("Introduce una nueva fecha. Formato yyyy-mm-dd ")
+        let etiquetasString = prompt("Introduce las nuevas etiquetas separadas por comas");
+        let etiquetas=etiquetasString.split(",");
 
         gasto.actualizarDescripcion(descripcion)
         gasto.actualizarValor(valor);
