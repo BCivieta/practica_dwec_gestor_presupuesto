@@ -109,8 +109,34 @@ function nuevoGastoWeb(){
 let botonAnyadirGasto = document.getElementById("anyadirgasto");
 botonAnyadirGasto.addEventListener("click", nuevoGastoWeb);
 
-function borrarEtiquetasHandle(gasto, etiqueta){
-    this.handleEven = function(){
+function EditarHandle(gasto){
+    this.handleEvent = function (event){
+        this.gasto=gasto;
+        descripcion = propmt("Introduce la nueva descripción");
+        valorString= prompt ("introduce un nuevo valor");
+        valor= parseFloat(valorString);
+        fecha = prompt("Introduce una nueva fecha. Formato yyyy-mm-dd ")
+        etiquetasString = prompt("Introduce las nuevas etiquetas separadas por comas");
+        etiquetas=etiquetasString.split(",");
+
+        gasto.actualizarDescripcion(descripcion)
+        gasto.actualizarValor(valor);
+        gasto.actualizarFecha(fecha);
+        gasto.anyadirEtiquetas(...etiquetas);
+
+        repintar();
+    }
+}
+ function BorrarHandle(gasto){
+    this.handleEvent= function (event){
+        this.gasto=gasto;
+        gesPres.borrarGasto(gasto.id);
+        repintar();
+    }
+ }
+
+function BorrarEtiquetasHandle(gasto, etiqueta){
+    this.handleEvent = function(){
         this.gasto= gasto;
         this.etiqueta= etiqueta;
         gasto.borrarEtiquetas(etiqueta);

@@ -22,7 +22,7 @@ gesPres.anyadirGasto(gasto6);
 gesPresWeb.mostrarDatoEnId("gastos-totales", gesPres.calcularTotalGastos());
 gesPresWeb.mostrarDatoEnId("balance-total", gesPres.calcularBalance());
 
-//let listadoGastos=gesPres.listarGastos();
+
 for(let gasto of gesPres.listarGastos()){
 gesPresWeb.mostrarGastoWeb("listado-gastos-completo", gasto);
 }
