@@ -165,6 +165,78 @@ function BorrarEtiquetasHandle(gasto, etiqueta){
         repintar();
     }
 }
+
+function nuevoGastoWebFormulario(){
+    //clonamos la template del formulario
+    let plantillaFormulario = document.getElementById("formulario-template").content.cloneNode(true);
+    //creamos una variable para almaceanar ese formulario.
+    var formulario = plantillaFormulario.querySelector("form");
+
+    //deshabilitar el boton para añadir gasto
+    botonAnyadirGastoForm.disable=true;
+
+    //Manejador del evento submitForm
+    formulario.addEventListener("submit", SubmitForm);//a través de una función.
+
+    //Nueva instancia para el manejador del evento cancelar
+    let cancelarEnvio= new CancelarForm();//A través de funcion constructora.
+
+    //Buscamos el boton cancelar
+    let botonCancelarForm= formulario.querySelector("button.cancelar");
+
+    //MAnejador del evento cancelar
+    botonCancelarForm.addEventListener("click", cancelarEnvio);
+
+    //Encoontramos el elemeto al que queremos añadir la template
+    let elementoId= document.getElementById("controlesprincipales");
+
+    //Añadimos la plantilla del formulario
+    elementoId.appendChild(formulario);
+}
+//Encontramos el boton para añadir gastos
+let botonAnyadirGastoForm= document.getElementById("anyadirgasto-formulario");
+
+//Manejador para añadir gastos
+botonAnyadirGastoForm.addEventListener("click", nuevoGastoWebFormulario)//a traves de una funcion.
+
+//Funcion manejadora del evento submit.
+function SubmitForm(event){
+
+    //Evitamos que se envie el formulario
+    event.preventDefault();
+
+    //atrapamos los valores rellenados en el formulario
+    let descripcion=event.currentTarget.elements.descripcion.value;
+    let valor=parseFloat(event.currentTarget.elements.valor.value);
+    let fecha= event.currentTarget.elements.fecha.value;
+    let etiquetasString = event.currentTarget.elements.etiquetas.value;
+    let etiquetas=etiquetasString.split(",");
+    
+    //Creamos una instancia de gasto y le añadimos esos valores
+    let gasto = new gesPres.CrearGasto(descripcion, valor, fecha, ...etiquetas);
+
+    //Añadimos los el nuevo gasto al array gastos
+    gesPres.anyadirGasto(gasto);
+
+    //Repintamos la pagina con la nueva información.
+    repintar();
+
+   //Habilitamos de nuevo el boton para añadir gastos
+    botonAnyadirGastoForm.disable= false;
+}
+
+//Funcion constructora, manejadora de los eventos cancelar
+function CancelarForm(){
+    this.handleEvent=function(event){
+
+        //borramos el formulario
+        this.formulario.remove();
+        
+        //Habilitamos el boton para añadir gastos
+        this.botonAnyadirGastoForm.disable=false;
+    }
+}
+
 export{
     mostrarDatoEnId,
     mostrarGastoWeb,
