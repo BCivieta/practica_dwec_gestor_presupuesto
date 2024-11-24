@@ -179,7 +179,7 @@ function nuevoGastoWebFormulario(){
     formulario.addEventListener("submit", SubmitForm);//a través de una función.
 
     //Nueva instancia para el manejador del evento cancelar
-    let cancelarEnvio= new CancelarForm();//A través de funcion constructora.
+    let cancelarEnvio= new CancelarForm(formulario, botonAnyadirGastoForm);//A través de funcion constructora.
 
     //Buscamos el boton cancelar
     let botonCancelarForm= formulario.querySelector("button.cancelar");
@@ -226,9 +226,11 @@ function SubmitForm(event){
 }
 
 //Funcion constructora, manejadora de los eventos cancelar
-function CancelarForm(){
+function CancelarForm(formulario, botonAnyadirGastoForm){
+    this.formulario=formulario;
+    this.botonAnyadirGastoForm=botonAnyadirGastoForm;
     this.handleEvent=function(event){
-
+        
         //borramos el formulario
         this.formulario.remove();
         
