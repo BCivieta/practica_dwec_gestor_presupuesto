@@ -13,7 +13,6 @@ function mostrarGastoWeb(idElemento, gasto){
         divIdElemento.appendChild(divGasto);
     }
     
-
     let divDescripcion = document.createElement("div");
     divDescripcion.classList.add ("gasto-descripcion");
     divDescripcion.textContent = gasto.descripcion;
@@ -63,6 +62,78 @@ function mostrarGastoWeb(idElemento, gasto){
     botonBorrar.textContent="Borrar";
     divGasto.appendChild(botonBorrar);
 
+    //crear doton editar a traves de funcion constructora
+    let botonEditarFormulario = document.createElement("button");
+    botonEditarFormulario.classList.add("gasto-editar-formulario");
+    botonEditarFormulario.setAttribute("type","button");
+    botonEditarFormulario.textContent="Editar (formulario)";
+    divGasto.appendChild(botonEditarFormulario);
+
+    let editarHandleFormulario = new EditarHandleFormulario(gasto);
+    botonEditarFormulario.addEventListener("click", editarHandleFormulario);
+
+
+}
+//Funcion manejadora del evento editar formulario
+function EditarHandleFormulario(gasto){
+    this.gasto=gasto;
+    this.handleEvent = function(event){
+        
+        //clonamos la template del formulario
+        let plantillaFormulario = document.getElementById("formulario-template").content.cloneNode(true);
+        //creamos una variable para almaceanar ese formulario.
+        var formulario = plantillaFormulario.querySelector("form");
+
+        //añadimos los campos del formulario que se quiere editar
+        formulario.descripcion.value = gasto.descripcion;
+        formulario.valor.value = gasto.valor;
+        formulario.fecha.value = new Date(gasto.fecha).toISOString().substring(0,10);
+        formulario.etiquetas.value = gasto.etiquetas.join(",");
+
+        //Creamos una instancia del manejador del evento submit del formulaio.
+        let enviarFormulario = new FormularioEditadoSubmit(gasto);
+        
+        formulario.addEventListener("submit", enviarFormulario)
+
+        //encontramos el boton editar en formulario haciendo referencia al elemento que desencadeno el evento en el que estamos.
+        let botonEditarFormulario = event.currentTarget;
+        botonEditarFormulario.disabled = true;
+
+        let cancelarFormulario = new CancelarForm(formulario, botonEditarFormulario);
+        let botonCancelarForm = formulario.querySelector("button.cancelar");
+        botonCancelarForm.addEventListener("click", cancelarFormulario);
+
+        let divGasto=document.querySelector(".gasto");
+        divGasto.appendChild(formulario);
+    }
+}
+function FormularioEditadoSubmit(gasto){
+    this.gasto = gasto;
+    this.handleEvent = function(event){
+
+        event.preventDefault();
+
+        //atrapamos los valores rellenados en el formulario
+        let descripcion=event.currentTarget.elements.descripcion.value;
+        let valor=event.currentTarget.elements.valor.value;
+        valor= parseFloat(valor);
+        let fecha= event.currentTarget.elements.fecha.value;
+        let etiquetasString = event.currentTarget.elements.etiquetas.value;
+        let etiquetas=etiquetasString.split(",");
+        
+        //Actualizamos los datos que se han introducido para el gasto
+        gasto.actualizarDescripcion(descripcion);
+        gasto.actualizarValor(valor);
+        gasto.actualizarFecha(fecha);
+        gasto.anyadirEtiquetas(...etiquetas);
+
+    
+        //Repintamos la pagina con la nueva información.
+        repintar();
+    
+       //Habilitamos de nuevo el boton para añadir gastos
+        botonAnyadirGastoForm.disabled= false;
+    }
 }
 function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo){
     let divIdElemento = document.getElementById(idElemento);
@@ -215,7 +286,7 @@ function SubmitForm(event){
     //Creamos una instancia de gasto y le añadimos esos valores
     let gasto = new gesPres.CrearGasto(descripcion, valor, fecha, ...etiquetas);
 
-    //Añadimos los el nuevo gasto al array gastos
+    //Añadimos el nuevo gasto al array gastos
     gesPres.anyadirGasto(gasto);
 
     //Repintamos la pagina con la nueva información.
@@ -229,6 +300,7 @@ function SubmitForm(event){
 function CancelarForm(formulario, botonAnyadirGastoForm){
     this.formulario=formulario;
     this.botonAnyadirGastoForm=botonAnyadirGastoForm;
+
     this.handleEvent=function(event){
         
         //borramos el formulario
