@@ -173,7 +173,7 @@ function nuevoGastoWebFormulario(){
     var formulario = plantillaFormulario.querySelector("form");
 
     //deshabilitar el boton para añadir gasto
-    botonAnyadirGastoForm.disable=true;
+    botonAnyadirGastoForm.disabled=true;
 
     //Manejador del evento submitForm
     formulario.addEventListener("submit", SubmitForm);//a través de una función.
@@ -222,7 +222,7 @@ function SubmitForm(event){
     repintar();
 
    //Habilitamos de nuevo el boton para añadir gastos
-    botonAnyadirGastoForm.disable= false;
+    botonAnyadirGastoForm.disabled= false;
 }
 
 //Funcion constructora, manejadora de los eventos cancelar
@@ -233,7 +233,7 @@ function CancelarForm(){
         this.formulario.remove();
         
         //Habilitamos el boton para añadir gastos
-        this.botonAnyadirGastoForm.disable=false;
+        this.botonAnyadirGastoForm.disabled=false;
     }
 }
 
