@@ -311,11 +311,46 @@ function CancelarForm(formulario, botonAnyadirGastoForm){
     }
 }
 
+let formFiltrado = document.getElementById("formulario-filtrado");
+formFiltrado.addEventListener("submit", filtrarGastosWeb);
+
 function filtrarGastosWeb(event){
     event.preventDefault();
     
-    let form = document.getElementById("formulario-filtrado");
-    let descripcion=form.elements.formulario-filtrado-descripcion.value;
+    let descripcionF = document.getElementById("formulario-filtrado-descripcion").value;
+    let valorMinimoF = parseFloat(document.getElementById("formulario-filtrado-valor-minimo").value);
+    let valorMaximoF = parseFloat(document.getElementById("formulario-filtrado-valor-maximo").value);
+    let fechaDesdeF = document.getElementById("formulario-filtrado-fecha-desde").value;
+    let fechaHastaF = document.getElementById("formulario-filtrado-fecha-hasta").value;
+    let etiquetasStringF = document.getElementById("formulario-filtrado-etiquetas-tiene").value;
+
+    let etiquetasArray=[];
+
+    if(etiquetasStringF !=="")
+    {
+        etiquetasArray = gesPres.transformarListadoEtiquetas(etiquetasStringF);
+    }
+    else etiquetasArray = undefined;
+    let objetoFiltrar ={
+        
+        
+        fechaDesde: fechaDesdeF || undefined,
+        fechaHasta: fechaHastaF || undefined,
+        valorMinimo:isNaN(valorMinimoF) ? undefined : valorMinimoF,
+        valorMaximo: isNaN(valorMaximoF) ? undefined : valorMaximoF,
+        descripcionContiene:descripcionF || undefined,
+        etiquetasTiene: etiquetasArray
+    };
+    console.log(objetoFiltrar)
+    let filtrado = gesPres.filtrarGastos(objetoFiltrar);
+    console.log(filtrado);
+    let listadoGastosCompleto=document.getElementById("listado-gastos-completo");
+    listadoGastosCompleto.innerHTML= "";
+
+    for(let gasto of filtrado)
+    {
+        mostrarGastoWeb("listado-gastos-completo", gasto);
+    }
 }
 
 export{
