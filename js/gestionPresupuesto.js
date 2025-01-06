@@ -14,8 +14,7 @@ function actualizarPresupuesto(nuevoPresupuesto) {
     }else {
         presupuesto=nuevoPresupuesto;
         return presupuesto;
-    }
-    
+    }   
 }
 
 function mostrarPresupuesto() {
@@ -113,46 +112,7 @@ function calcularBalance(){
     let balance= presupuesto - calcularTotalGastos();
     return balance;
 }
-//CODIGO QUE PASA EL TEST PERO QUE NO ASEGURA QUE SOLO LOS GASTOS QUE PASEN TODOS LOS FILTROS ESTEN DENTRO DEL NUEVO ARRAY
-/*function filtrarGastos(filtro){
-   
-    return gastos.filter(function(gasto){
 
-        let dentro = true;
-        if(filtro.fechaDesde!=undefined) 
-        {
-            if(gasto.fecha < Date.parse(filtro.fechaDesde)) dentro= false;
-            //}else dentro=false;
-        }
-        if(filtro.fechaHasta != undefined)
-        {
-            if(gasto.fecha > Date.parse(filtro.fechaHasta)) dentro = false;
-           // }else dentro=false;
-        }   
-        if (filtro.valorMinimo!= undefined)
-        {
-            if(gasto.valor < filtro.valorMinimo) dentro = false;
-        }
-        if(filtro.valorMaximo != undefined )
-        {
-            if( gasto.valor > filtro.valorMaximo) dentro= false;
-        }
-        if(filtro.descripcionContiene != undefined)
-        {
-            if (!gasto.descripcion.toLowerCase().includes(filtro.descripcionContiene.toLowerCase())) dentro = false;
-        }
-        if(filtro.etiquetasTiene != undefined)
-        {
-            let etiquetasGastoMinus= gasto.etiquetas.map(elemento=> elemento.toLowerCase());        //Itera sobre cada elemento y ejecuta la funcion (que convierte en minúsculas)
-            let etiquetasFiltroMinus= filtro.etiquetasTiene.map(elemento=> elemento.toLowerCase()); //sobre cada uno. Devulve el nuevo array.
-            if(!etiquetasGastoMinus.some(elemento=>etiquetasFiltroMinus.includes(elemento))) //Itera sobre cada elemento para ver si alguno cumple con una condicion dada. 
-            {                                                                                //devuelve true o false. Se detiene con el primero que cumpla
-                    dentro = false;
-            }
-        }
-        return dentro;//devolvemos si el gasto esta dentro del nuevo array o no.
-    });
-}*/
 function filtrarGastos(filtro){
    
     return gastos.filter(function(gasto){
@@ -213,6 +173,10 @@ function agruparGastos(periodo,  etiquetas, fechaDesde, fechaHasta){
     return gastosPorPeriodo;
 }
 
+function transformarListadoEtiquetas(etiquetas){
+    return etiquetas.match(/\w+/gi)
+}
+
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
 // Las funciones y objetos deben tener los nombres que se indican en el enunciado
 // Si al obtener el código de una práctica se genera un conflicto, por favor incluye todo el código que aparece aquí debajo
@@ -227,4 +191,5 @@ export   {
     calcularBalance,
     filtrarGastos,
     agruparGastos,
+    transformarListadoEtiquetas
 }

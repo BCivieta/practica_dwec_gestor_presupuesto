@@ -311,6 +311,13 @@ function CancelarForm(formulario, botonAnyadirGastoForm){
     }
 }
 
+function filtrarGastosWeb(event){
+    event.preventDefault();
+    
+    let form = document.getElementById("formulario-filtrado");
+    let descripcion=form.elements.formulario-filtrado-descripcion.value;
+}
+
 export{
     mostrarDatoEnId,
     mostrarGastoWeb,
