@@ -365,6 +365,23 @@ function guardarGastosWeb(){
     localStorage.setItem('GestorGastosDWEC', listaGastosStr);
 }
 
+let botonCargarGastos = document.getElementById("cargar-gastos");
+botonCargarGastos.addEventListener("click", cargarGastosWeb)
+function cargarGastosWeb(){
+
+    let listaGastosAlmacenadosStr = localStorage.getItem('GestorGastosDWEC');
+    let listaGastosAlmacenadosObj=[];
+
+    if(listaGastosAlmacenadosStr){
+
+        listaGastosAlmacenadosObj = JSON.parse(listaGastosAlmacenadosStr);
+    }
+    
+    gesPres.cargarGastos(listaGastosAlmacenadosObj);
+
+    repintar();
+}
+
 export{
     mostrarDatoEnId,
     mostrarGastoWeb,
