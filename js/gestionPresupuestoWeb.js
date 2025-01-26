@@ -116,17 +116,17 @@ function EditarHandleFormulario(gasto){
         divGasto.appendChild(formulario); 
 
         function HandleEnviarApi(gasto){
+            
             this.handleEvent= async function(){
+                
                 let nombreUsuario=document.getElementById("nombre_usuario").value;
-    
+                
                 if(nombreUsuario){
-                    let formulario= document.querySelector("form");
-                    let descripcion=formulario.descripcion.value;
-                    let valor = parseFloat(formulario.valor.value);
-                    let fecha = Date.parse(formulario.fecha.value);
-                    let etiquetas = (formulario.etiquetas.value).split(",");
-                    //let gasto = new gesPres.CrearGasto(descripcion, valor, fecha, ...etiquetas);
                     let url= "https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/"+ nombreUsuario +"/"+gasto.gastoId;
+                    let descripcion = formulario.elements.descripcion.value;
+                    let valor = parseFloat(formulario.elements.valor.value);
+                    let fecha = Date.parse(formulario.elements.fecha.value);
+                    let etiquetas = (formulario.elements.etiquetas.value).split(",");
                     try{
                         let respuesta= await fetch (url,{
                             method: "PUT",
@@ -351,10 +351,10 @@ function SubmitForm(event){
     
     if(nombreUsuario){
         let formulario= document.querySelector("form");
-        let descripcion=formulario.descripcion.value;
-        let valor = parseFloat(formulario.valor.value);
-        let fecha = Date.parse(formulario.fecha.value);
-        let etiquetas = (formulario.etiquetas.value).split(",");
+        let descripcion = formulario.elements.descripcion.value;
+        let valor = parseFloat(formulario.elements.valor.value);
+        let fecha = Date.parse(formulario.elements.fecha.value);
+        let etiquetas = (formulario.elements.etiquetas.value).split(",");
         
         let url= "https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/"+ nombreUsuario;
         try{
