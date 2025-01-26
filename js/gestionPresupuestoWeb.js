@@ -123,7 +123,7 @@ function EditarHandleFormulario(gasto){
                 
                 if(nombreUsuario){
                     let url= "https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/"+ nombreUsuario +"/"+gasto.gastoId;
-                    let descripcion = formulario.elements.descripcion.value;
+                    let descripcion=formulario.elements.descripcion.value;
                     let valor = parseFloat(formulario.elements.valor.value);
                     let fecha = Date.parse(formulario.elements.fecha.value);
                     let etiquetas = (formulario.elements.etiquetas.value).split(",");
@@ -142,11 +142,16 @@ function EditarHandleFormulario(gasto){
                         });
                         if(respuesta.ok){
                             cargarGastosApi();
-                        }else alert("Error al enviar el gasto");
+                        }
+                        else {
+                            alert("Error al enviar el gasto");
+                        }
                     }catch(error){
                         alert("Error de red: "+ error.message);
                     }   
-                }else alert("Introduce un nombre de usuario");
+                }else {
+                    alert("Introduce un nombre de usuario");
+                }
             }  
         }
 
@@ -351,7 +356,7 @@ function SubmitForm(event){
     
     if(nombreUsuario){
         let formulario= document.querySelector("form");
-        let descripcion = formulario.elements.descripcion.value;
+        let descripcion=formulario.elements.descripcion.value;
         let valor = parseFloat(formulario.elements.valor.value);
         let fecha = Date.parse(formulario.elements.fecha.value);
         let etiquetas = (formulario.elements.etiquetas.value).split(",");
@@ -372,12 +377,16 @@ function SubmitForm(event){
             });
             if(respuesta.ok){
                 cargarGastosApi();
-            }else alert("Error al enviar el gasto");
+            }else {
+                alert("Error al enviar el gasto");
+            }
         }catch(error){
             alert("Error de red: "+ error.message);
         }   
-    }else alert("Introduce un nombre de usuario");
- }
+    }else {
+        alert("Introduce un nombre de usuario");
+    }
+    }
 
 //Funcion constructora, manejadora de los eventos cancelar
 function CancelarForm(formulario, botonAnyadirGastoForm){
@@ -478,13 +487,13 @@ async function cargarGastosApi(){
                 let gastos = await respuesta.json();
                 gesPres.cargarGastos(gastos);
                 repintar();
-            } else{
+            }else{
                 alert("Error al solicitar respuesta");
             }   
         } catch(error){
             alert("error de red" + error.message);
         }
-    } else{
+    }else{
         alert("introduce un nombre de usuario");
     }    
 }
@@ -500,8 +509,12 @@ function HandleBorrarGastoApi(gasto){
             if(respuesta.ok){
                 alert("Se ha borrado el gasto con éxito");
                 cargarGastosApi();
-            }else alert("Error al borrar el gasto");
-        }else alert("Introduce un nombre de usuario");
+            }else {
+                alert("Error al borrar el gasto");
+            }
+        }else {
+            alert("Introduce un nombre de usuario");
+        }
     }
 }
 
