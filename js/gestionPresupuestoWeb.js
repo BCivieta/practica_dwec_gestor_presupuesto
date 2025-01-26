@@ -195,9 +195,9 @@ function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo){
     divIdElemento.appendChild(divAgrup);
 
 
-    //let titulo=document.createElement("h1");
-    //titulo.textContent = `Gastos agrupados por ${periodo}`;
-    //divAgrup.appendChild(titulo);
+    let titulo=document.createElement("h1");
+    titulo.textContent = `Gastos agrupados por ${periodo}`;
+    divAgrup.appendChild(titulo);
 
     for(let [clave, valor] of Object.entries(agrup)){
         let divAgrupDato = document.createElement("div");
